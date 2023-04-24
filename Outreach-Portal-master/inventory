@@ -1,0 +1,2 @@
+[azureuser]
+40.80.87.214 ansible_user=azureuser
