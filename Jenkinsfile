@@ -33,17 +33,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/anshulsankhyan/student-sphere-frontend.git'
             }
         }
-        stage('Build and push React Docker image') {
-            steps {
-                script {
-                    docker.buildAndPush(
-                        context: '.',
-                        dockerfile: 'path/to/student-sphere-frontend/Dockerfile',
-                        imageName: 'anshulsankhyan98/spe_major_project_frontend:latest'
-                    )
-                }
-            }
-        }
+
         stage('Clone SpringBoot Dockerfile') {
             steps {
                 git branch: 'main', url: 'https://github.com/anshulsankhyan/student-sphere-backend.git'
