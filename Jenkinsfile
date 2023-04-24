@@ -9,7 +9,7 @@ pipeline {
                 git branch:'main', url : 'https://github.com/anshulsankhyan/student-sphere-frontend.git'
             }
         }
-      stage('Build React') {
+        stage('Build React') {
             steps {
                 script{
                     sh 'npm install'
