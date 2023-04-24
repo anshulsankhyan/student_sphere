@@ -30,7 +30,7 @@ pipeline {
         }
         stage('Clone React Docker File') {
             steps {
-                git branch: 'main', credentialsId: 'github-credentials', url: 'https://github.com/anshulsankhyan/student-sphere-frontend.git'
+                git branch: 'main', url: 'https://github.com/anshulsankhyan/student-sphere-frontend.git'
             }
         }
         stage('Build and push React Docker image') {
@@ -46,7 +46,7 @@ pipeline {
         }
         stage('Clone SpringBoot Dockerfile') {
             steps {
-                git branch: 'main', credentialsId: 'github-credentials', url: 'https://github.com/anshulsankhyan/student-sphere-backend.git'
+                git branch: 'main', url: 'https://github.com/anshulsankhyan/student-sphere-backend.git'
             }
         }
         stage('Build and push SpringBootDocker image') {
