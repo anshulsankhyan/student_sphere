@@ -15,7 +15,7 @@ pipeline {
                     sh 'npm install'
                 }
             }
-      
+        }
         stage('Github clone spring') {
             steps {
                 git branch:'main', url : 'https://github.com/anshulsankhyan/student_sphere.git'
@@ -35,7 +35,6 @@ pipeline {
                 }
             }
         }
-
         stage('Push Docker Image React') {
             steps {
                 script{
@@ -52,7 +51,6 @@ pipeline {
                 }
             }
         }
-
         stage('Push Docker Image Spring') {
             steps {
                 script{
@@ -69,5 +67,4 @@ pipeline {
             }
         }
     }
-}
 }
