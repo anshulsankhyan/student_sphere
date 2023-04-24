@@ -1,29 +1,29 @@
 pipeline {
-    environment{
-        imageName=""
+    environment {
+        imageName = ""
     }
     agent any
     stages {
         stage('Github clone react') {
             steps {
-                git branch:'main', url : 'https://github.com/anshulsankhyan/student-sphere-frontend.git'
+                git branch: 'main', url: 'https://github.com/anshulsankhyan/student-sphere-frontend.git'
             }
         }
         stage('Build React') {
             steps {
-                script{
+                script {
                     sh 'npm install'
                 }
             }
         }
         stage('Github clone spring') {
             steps {
-                git branch:'main', url : 'https://github.com/anshulsankhyan/student-sphere-backend.git'
+                git branch: 'main', url: 'https://github.com/anshulsankhyan/student-sphere-backend.git'
             }
         }
         stage('Maven Build Spring') {
             steps {
-                script{
+                script {
                     sh 'mvn clean install'
                 }
             }
@@ -59,6 +59,7 @@ pipeline {
                     )
                 }
             }
+        }
         stage('Deploy') {
             steps {
                 ansiblePlaybook becomeUser: null, colorized: true, disableHostKeyChecking: true, installation: 'Ansible', inventory: 'inventory',
