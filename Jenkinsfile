@@ -1,52 +1,73 @@
 pipeline {
-    environment {
-        imageName = ""
+    environment{
+        imageName=""
     }
     agent any
     stages {
         stage('Github clone react') {
             steps {
-                git branch: 'main', url: 'https://github.com/anshulsankhyan/student-sphere-frontend.git'
+                git branch:'main', url : 'https://github.com/anshulsankhyan/student-sphere-frontend.git'
             }
         }
         stage('Build React') {
             steps {
-                script {
+                script{
                     sh 'npm install'
                 }
             }
         }
         stage('Github clone spring') {
             steps {
-                git branch: 'main', url: 'https://github.com/anshulsankhyan/student-sphere-backend.git'
+                git branch:'main', url : 'https://github.com/anshulsankhyan/student-sphere-backend.git'
             }
         }
         stage('Maven Build Spring') {
             steps {
-                script {
+                script{
                     sh 'mvn clean install'
                 }
             }
         }
-        stage('Clone React Docker File') {
+        stage('Github clone for docker build react') {
             steps {
-                git branch: 'main', url: 'https://github.com/anshulsankhyan/student-sphere-frontend.git'
+                git branch:'main', url : 'https://github.com/anshulsankhyan/student-sphere-frontend.git'
             }
         }
-
-        stage('Clone SpringBoot Dockerfile') {
+        
+        stage('Docker Build React') {
             steps {
-                git branch: 'main', url: 'https://github.com/anshulsankhyan/student-sphere-backend.git'
+                script{
+                    imageName=docker.build "anshulsankhyan98/spe_major_project_frontend"
+                }
             }
         }
-        stage('Build and push SpringBootDocker image') {
+        stage('Push Docker Image React') {
             steps {
-                script {
-                    docker.buildAndPush(
-                        context: '.',
-                        dockerfile: 'path/to/student-sphere-backend/Dockerfile',
-                        imageName: 'anshulsankhyan98/spe_major_project_backend'
-                    )
+                script{
+                    docker.withRegistry('','docker-jenkins'){
+                        imageName.push()
+                    }
+                }
+            }
+        }
+        stage('Github clone for docker build spring') {
+            steps {
+                git branch:'main', url : 'https://github.com/anshulsankhyan/student-sphere-backend.git'
+            }
+        }
+        stage('Docker Build Spring') {
+            steps {
+                script{
+                    imageName=docker.build "anshulsankhyan98/spe_major_project_backend"
+                }
+            }
+        }
+        stage('Push Docker Image Spring') {
+            steps {
+                script{
+                    docker.withRegistry('','docker-jenkins'){
+                        imageName.push()
+                    }
                 }
             }
         }
