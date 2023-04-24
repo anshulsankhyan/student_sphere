@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Github clone spring') {
             steps {
-                git branch:'main', url : 'https://github.com/anshulsankhyan/student_sphere.git'
+                git branch:'main', url : 'https://github.com/anshulsankhyan/student-sphere-backend.git'
             }
         }
         stage('Maven Build Spring') {
