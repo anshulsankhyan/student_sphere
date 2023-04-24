@@ -28,38 +28,37 @@ pipeline {
                 }
             }
         }
-        stage('Docker Build React') {
+        stage('Clone React Docker File') {
             steps {
-                script{
-                    imageName=docker.build "anshulsankhyan98/spe_major_project_frontend"
+                git branch: 'main', credentialsId: 'github-credentials', url: 'https://github.com/anshulsankhyan/student-sphere-frontend.git'
+            }
+        }
+        stage('Build and push React Docker image') {
+            steps {
+                script {
+                    docker.buildAndPush(
+                        context: '.',
+                        dockerfile: 'path/to/student-sphere-frontend/Dockerfile',
+                        imageName: 'anshulsankhyan98/spe_major_project_frontend:latest'
+                    )
                 }
             }
         }
-        stage('Push Docker Image React') {
+        stage('Clone SpringBoot Dockerfile') {
             steps {
-                script{
-                    docker.withRegistry('','docker-jenkins'){
-                        imageName.push()
-                    }
-                }
+                git branch: 'main', credentialsId: 'github-credentials', url: 'https://github.com/anshulsankhyan/student-sphere-backend.git'
             }
         }
-        stage('Docker Build Spring') {
+        stage('Build and push SpringBootDocker image') {
             steps {
-                script{
-                    imageName=docker.build "anshulsankhyan98/spe_major_project_backend"
+                script {
+                    docker.buildAndPush(
+                        context: '.',
+                        dockerfile: 'path/to/student-sphere-backend/Dockerfile',
+                        imageName: 'anshulsankhyan98/spe_major_project_backend'
+                    )
                 }
             }
-        }
-        stage('Push Docker Image Spring') {
-            steps {
-                script{
-                    docker.withRegistry('','docker-jenkins'){
-                        imageName.push()
-                    }
-                }
-            }
-        }
         stage('Deploy') {
             steps {
                 ansiblePlaybook becomeUser: null, colorized: true, disableHostKeyChecking: true, installation: 'Ansible', inventory: 'inventory',
