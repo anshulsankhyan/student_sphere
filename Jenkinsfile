@@ -73,7 +73,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                ansiblePlaybook credentialsId: 'check',colorized: true, installation: 'Ansible', inventory: 'inventory',
+                ansiblePlaybook colorized: true, installation: 'Ansible', inventory: 'inventory',
                  playbook: 'playbook.yml'
             }
         }
